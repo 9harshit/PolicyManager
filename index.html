@@ -1,42 +1,4 @@
-<?php
 
-	$connection = mysqli_connect('localhost', 'root', '');
-if (!$connection){
-    die("Database Connection Failed" . mysqli_error($connection));
-}
-$select_db = mysqli_select_db($connection, 'userdb');
-if (!$select_db){
-    die("Database Selection Failed" . mysqli_error($connection));
-}
- $gid = $username = $password  = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-	// Assigning POST values to variables.
-	$username = $_POST['uname'];
-	$password = $_POST['psw'];
-
-	// CHECK FOR THE RECORD FROM TABLE
-	$query = "SELECT * FROM `login` WHERE username='$username' and password='$password'";
-	 
-	$result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-	$count = mysqli_num_rows($result);
-	
-	    while($row = $result->fetch_assoc()) {
-	 
-	$gid = $row["id"];
-		}
-	if ($count == 1){
-	//echo "Login Credentials verified";
-	echo "<script>alert('Success');</script> ";
-	header("Location: http://localhost/new/account.php?id=$gid");
-	}
-	else{
-	echo "Fail";
-	//echo "Invalid Login Credentials";
-	}
-}
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,7 +107,13 @@ function ValidateEmail(inputText1,inputText2)
 		 return false;
 	  }
 }
-
+function login()
+{
+	var u= document.getElementById(u);
+	var p = document.getElementById(p);
+	if(u==1)
+		alert("success");
+}
 </script>
 <body>
 	<div class="welcome">
@@ -159,13 +127,13 @@ function ValidateEmail(inputText1,inputText2)
 <form method="post" action="login.php">
  <div class="container">
       <label for="uname"><b>Username</b></label><br>
-      <input type="text" name="uname" required><br><br>
+      <input type="text" name="uname" id="u" required><br><br>
 
       <label for="psw"><b>Password</b></label><br>
       <input type="password" name="psw" required>
     </div>
     
-	  <button type="submit" style="width:10%;" name="loginbtn" >Login</button>
+	  <button type="submit" style="width:10%;" name="loginbtn" onlick="login()" >Login</button>
 	<button onclick="document.getElementById('registerpg').style.display='block'" style="width:10%;" >Register</button>
 </div>
 </center>
